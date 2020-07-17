@@ -1,0 +1,12 @@
+C:\Users\user\source\repos\DeliveryManagement_Admin\DeliveryManagement_Admin\bin\Debug\DeliveryManagement_Admin.exe.config
+C:\Users\user\source\repos\DeliveryManagement_Admin\DeliveryManagement_Admin\bin\Debug\DeliveryManagement_Admin.exe
+C:\Users\user\source\repos\DeliveryManagement_Admin\DeliveryManagement_Admin\bin\Debug\DeliveryManagement_Admin.pdb
+C:\Users\user\source\repos\DeliveryManagement_Admin\DeliveryManagement_Admin\obj\Debug\DeliveryManagement_Admin.csprojAssemblyReference.cache
+C:\Users\user\source\repos\DeliveryManagement_Admin\DeliveryManagement_Admin\obj\Debug\DeliveryManagement_Admin.Properties.Resources.resources
+C:\Users\user\source\repos\DeliveryManagement_Admin\DeliveryManagement_Admin\obj\Debug\DeliveryManagement_Admin.csproj.GenerateResource.cache
+C:\Users\user\source\repos\DeliveryManagement_Admin\DeliveryManagement_Admin\obj\Debug\DeliveryManagement_Admin.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\DeliveryManagement_Admin\DeliveryManagement_Admin\obj\Debug\DeliveryManagement_Admin.exe
+C:\Users\user\source\repos\DeliveryManagement_Admin\DeliveryManagement_Admin\obj\Debug\DeliveryManagement_Admin.pdb
+C:\Users\user\source\repos\DeliveryManagement_Admin\DeliveryManagement_Admin\obj\Debug\DeliveryManagement_Admin.Form1.resources
+C:\Users\user\source\repos\DeliveryManagement_Admin\DeliveryManagement_Admin\obj\Debug\DeliveryManagement_Admin.Form4.resources
+C:\Users\user\source\repos\DeliveryManagement_Admin\DeliveryManagement_Admin\obj\Debug\DeliveryManagement_Admin.Form5.resources
