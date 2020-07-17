@@ -1,0 +1,9 @@
+C:\Users\user\source\repos\DeliveryManagement_Client\DeliveryManagement_Client\obj\Debug\DeliveryManagement_Client.csprojAssemblyReference.cache
+C:\Users\user\source\repos\DeliveryManagement_Client\DeliveryManagement_Client\obj\Debug\DeliveryManagement.Form1.resources
+C:\Users\user\source\repos\DeliveryManagement_Client\DeliveryManagement_Client\obj\Debug\DeliveryManagement.Form2.resources
+C:\Users\user\source\repos\DeliveryManagement_Client\DeliveryManagement_Client\obj\Debug\DeliveryManagement.Form3.resources
+C:\Users\user\source\repos\DeliveryManagement_Client\DeliveryManagement_Client\obj\Debug\DeliveryManagement_Client.Properties.Resources.resources
+C:\Users\user\source\repos\DeliveryManagement_Client\DeliveryManagement_Client\obj\Debug\DeliveryManagement_Client.csproj.GenerateResource.cache
+C:\Users\user\source\repos\DeliveryManagement_Client\DeliveryManagement_Client\obj\Debug\DeliveryManagement_Client.csproj.CoreCompileInputs.cache
+C:\Users\user\source\repos\DeliveryManagement_Client\DeliveryManagement_Client\obj\Debug\DeliveryManagement_Client.exe
+C:\Users\user\source\repos\DeliveryManagement_Client\DeliveryManagement_Client\obj\Debug\DeliveryManagement_Client.pdb
