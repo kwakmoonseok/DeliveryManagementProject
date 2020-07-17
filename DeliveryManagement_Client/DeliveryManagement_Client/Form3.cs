@@ -137,8 +137,7 @@ namespace DeliveryManagement_Client
                 {
                     string lockerPasswd = userCheckreader["Passwd"].ToString().Trim();
 
-                    if (userCheckreader.NextResult())
-                    {
+                    if (userCheckreader.NextResult()){
                         List<string> userIdList = new List<string>();
                         List<string> userNameList = new List<string>();
                         while (userCheckreader.Read())
@@ -146,16 +145,30 @@ namespace DeliveryManagement_Client
                             userIdList.Add(userCheckreader["CustId"].ToString().Trim());
                             userNameList.Add(userCheckreader["CustName"].ToString().Trim());
                         }
-                        for (int i = 0; i < userIdList.Count; i++)
-                        {
+                        for (int i = 0; i < userIdList.Count; i++){
                             if (textBox2.Text.Trim().Equals(lockerPasswd) && textBox1.Text.Trim().Equals(userIdList[i]))
                             {
                                 MessageBox.Show(userNameList[i] + "님께서 물건을 수령하셨습니다.");
                                 conn.Close();
 
-                                conn.Open();
-                                command.CommandText = "UPDATE LockerInfor SET ItemName = NULL, Passwd = NULL, StoredTime = NULL WHERE LockerNum = " + lockernum + ";";
-                                command.ExecuteNonQuery();
+                                if (succeedToFindUser && succeedToCheckPasswd)
+                                {
+                                    conn.Open();
+                                    command.CommandText = "SELECT count(*) from ReceiverInfor;";
+                                    receiptCount = Convert.ToInt16(command.ExecuteScalar()) + 1;
+                                    conn.Close();
+
+                                    conn.Open();
+                                    command.CommandText = "INSERT INTO ReceiverInfor VALUES (" + receiptCount + ", '" + userIdList[i] + "', " + lockernum + ", '" + string.Format("{0:yyyy-MM-dd hh:mm:ss}", DateTime.Now) + "');";
+                                    command.ExecuteNonQuery();
+                                    conn.Close();
+
+                                    conn.Open();
+                                    command.CommandText = "UPDATE LockerInfor SET ItemName = NULL, Passwd = NULL, StoredTime = NULL WHERE LockerNum = " + lockernum + ";";
+                                    command.ExecuteNonQuery();
+                                }
+
+                                
 
                                 if (textBox2.Text.Trim().Equals(lockerPasswd))
                                 {
@@ -165,19 +178,9 @@ namespace DeliveryManagement_Client
                                 if (textBox1.Text.Trim().Equals(userIdList[i]))
                                     succeedToCheckPasswd = true;
 
-                                conn.Close();
-                                if (succeedToFindUser && succeedToCheckPasswd)
-                                {
-                                    conn.Open();
-                                    command.CommandText = "SELECT count(*) from ReceiverInfor;";
-                                    receiptCount = Convert.ToInt16(command.ExecuteScalar()) + 1;
-                                    conn.Close();
-
-                                    conn.Open();
-                                    command.CommandText = "INSERT INTO ReceiverInfor VALUES (" + receiptCount + ", '" + userIdList[i] + "', " + lockernum + ", '" + string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now) + "');";
-                                    command.ExecuteNonQuery();
-                                }
-                            }
+                                
+                                
+                            }       
                         }
                         if (string.IsNullOrEmpty(lockerPasswd))
                             MessageBox.Show("택배함 안에 물건이 없습니다.");
@@ -191,7 +194,7 @@ namespace DeliveryManagement_Client
                     }
                 }
                 conn.Close();
-            }
+            }  
         }
 
         private void button3_Click(object sender, EventArgs e)
@@ -217,8 +220,7 @@ namespace DeliveryManagement_Client
                 {
                     string lockerPasswd = userCheckreader["Passwd"].ToString().Trim();
 
-                    if (userCheckreader.NextResult())
-                    {
+                    if (userCheckreader.NextResult()){
                         List<string> userIdList = new List<string>();
                         List<string> userNameList = new List<string>();
                         while (userCheckreader.Read())
@@ -226,16 +228,30 @@ namespace DeliveryManagement_Client
                             userIdList.Add(userCheckreader["CustId"].ToString().Trim());
                             userNameList.Add(userCheckreader["CustName"].ToString().Trim());
                         }
-                        for (int i = 0; i < userIdList.Count; i++)
-                        {
+                        for (int i = 0; i < userIdList.Count; i++){
                             if (textBox2.Text.Trim().Equals(lockerPasswd) && textBox1.Text.Trim().Equals(userIdList[i]))
                             {
                                 MessageBox.Show(userNameList[i] + "님께서 물건을 수령하셨습니다.");
                                 conn.Close();
 
-                                conn.Open();
-                                command.CommandText = "UPDATE LockerInfor SET ItemName = NULL, Passwd = NULL, StoredTime = NULL WHERE LockerNum = " + lockernum + ";";
-                                command.ExecuteNonQuery();
+                                if (succeedToFindUser && succeedToCheckPasswd)
+                                {
+                                    conn.Open();
+                                    command.CommandText = "SELECT count(*) from ReceiverInfor;";
+                                    receiptCount = Convert.ToInt16(command.ExecuteScalar()) + 1;
+                                    conn.Close();
+
+                                    conn.Open();
+                                    command.CommandText = "INSERT INTO ReceiverInfor VALUES (" + receiptCount + ", '" + userIdList[i] + "', " + lockernum + ", '" + string.Format("{0:yyyy-MM-dd hh:mm:ss}", DateTime.Now) + "');";
+                                    command.ExecuteNonQuery();
+                                    conn.Close();
+
+                                    conn.Open();
+                                    command.CommandText = "UPDATE LockerInfor SET ItemName = NULL, Passwd = NULL, StoredTime = NULL WHERE LockerNum = " + lockernum + ";";
+                                    command.ExecuteNonQuery();
+                                }
+
+                                
 
                                 if (textBox2.Text.Trim().Equals(lockerPasswd))
                                 {
@@ -245,19 +261,9 @@ namespace DeliveryManagement_Client
                                 if (textBox1.Text.Trim().Equals(userIdList[i]))
                                     succeedToCheckPasswd = true;
 
-                                conn.Close();
-                                if (succeedToFindUser && succeedToCheckPasswd)
-                                {
-                                    conn.Open();
-                                    command.CommandText = "SELECT count(*) from ReceiverInfor;";
-                                    receiptCount = Convert.ToInt16(command.ExecuteScalar()) + 1;
-                                    conn.Close();
-
-                                    conn.Open();
-                                    command.CommandText = "INSERT INTO ReceiverInfor VALUES (" + receiptCount + ", '" + userIdList[i] + "', " + lockernum + ", '" + string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now) + "');";
-                                    command.ExecuteNonQuery();
-                                }
-                            }
+                                
+                                
+                            }       
                         }
                         if (string.IsNullOrEmpty(lockerPasswd))
                             MessageBox.Show("택배함 안에 물건이 없습니다.");
@@ -271,12 +277,12 @@ namespace DeliveryManagement_Client
                     }
                 }
                 conn.Close();
-            }
+            }  
         }
         private void button4_Click_1(object sender, EventArgs e)
         {
             int lockernum = 4;
-            using (SqlConnection conn = new SqlConnection(constr))
+           using (SqlConnection conn = new SqlConnection(constr))
             {
                 bool succeedToFindUser = false;
                 bool succeedToCheckPasswd = false;
@@ -296,8 +302,7 @@ namespace DeliveryManagement_Client
                 {
                     string lockerPasswd = userCheckreader["Passwd"].ToString().Trim();
 
-                    if (userCheckreader.NextResult())
-                    {
+                    if (userCheckreader.NextResult()){
                         List<string> userIdList = new List<string>();
                         List<string> userNameList = new List<string>();
                         while (userCheckreader.Read())
@@ -305,16 +310,30 @@ namespace DeliveryManagement_Client
                             userIdList.Add(userCheckreader["CustId"].ToString().Trim());
                             userNameList.Add(userCheckreader["CustName"].ToString().Trim());
                         }
-                        for (int i = 0; i < userIdList.Count; i++)
-                        {
+                        for (int i = 0; i < userIdList.Count; i++){
                             if (textBox2.Text.Trim().Equals(lockerPasswd) && textBox1.Text.Trim().Equals(userIdList[i]))
                             {
                                 MessageBox.Show(userNameList[i] + "님께서 물건을 수령하셨습니다.");
                                 conn.Close();
 
-                                conn.Open();
-                                command.CommandText = "UPDATE LockerInfor SET ItemName = NULL, Passwd = NULL, StoredTime = NULL WHERE LockerNum = " + lockernum + ";";
-                                command.ExecuteNonQuery();
+                                if (succeedToFindUser && succeedToCheckPasswd)
+                                {
+                                    conn.Open();
+                                    command.CommandText = "SELECT count(*) from ReceiverInfor;";
+                                    receiptCount = Convert.ToInt16(command.ExecuteScalar()) + 1;
+                                    conn.Close();
+
+                                    conn.Open();
+                                    command.CommandText = "INSERT INTO ReceiverInfor VALUES (" + receiptCount + ", '" + userIdList[i] + "', " + lockernum + ", '" + string.Format("{0:yyyy-MM-dd hh:mm:ss}", DateTime.Now) + "');";
+                                    command.ExecuteNonQuery();
+                                    conn.Close();
+
+                                    conn.Open();
+                                    command.CommandText = "UPDATE LockerInfor SET ItemName = NULL, Passwd = NULL, StoredTime = NULL WHERE LockerNum = " + lockernum + ";";
+                                    command.ExecuteNonQuery();
+                                }
+
+                                
 
                                 if (textBox2.Text.Trim().Equals(lockerPasswd))
                                 {
@@ -324,19 +343,9 @@ namespace DeliveryManagement_Client
                                 if (textBox1.Text.Trim().Equals(userIdList[i]))
                                     succeedToCheckPasswd = true;
 
-                                conn.Close();
-                                if (succeedToFindUser && succeedToCheckPasswd)
-                                {
-                                    conn.Open();
-                                    command.CommandText = "SELECT count(*) from ReceiverInfor;";
-                                    receiptCount = Convert.ToInt16(command.ExecuteScalar()) + 1;
-                                    conn.Close();
-
-                                    conn.Open();
-                                    command.CommandText = "INSERT INTO ReceiverInfor VALUES (" + receiptCount + ", '" + userIdList[i] + "', " + lockernum + ", '" + string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now) + "');";
-                                    command.ExecuteNonQuery();
-                                }
-                            }
+                                
+                                
+                            }       
                         }
                         if (string.IsNullOrEmpty(lockerPasswd))
                             MessageBox.Show("택배함 안에 물건이 없습니다.");
@@ -350,7 +359,7 @@ namespace DeliveryManagement_Client
                     }
                 }
                 conn.Close();
-            }
+            }  
         }
 
         private void button5_Click_1(object sender, EventArgs e)
@@ -376,8 +385,7 @@ namespace DeliveryManagement_Client
                 {
                     string lockerPasswd = userCheckreader["Passwd"].ToString().Trim();
 
-                    if (userCheckreader.NextResult())
-                    {
+                    if (userCheckreader.NextResult()){
                         List<string> userIdList = new List<string>();
                         List<string> userNameList = new List<string>();
                         while (userCheckreader.Read())
@@ -385,16 +393,30 @@ namespace DeliveryManagement_Client
                             userIdList.Add(userCheckreader["CustId"].ToString().Trim());
                             userNameList.Add(userCheckreader["CustName"].ToString().Trim());
                         }
-                        for (int i = 0; i < userIdList.Count; i++)
-                        {
+                        for (int i = 0; i < userIdList.Count; i++){
                             if (textBox2.Text.Trim().Equals(lockerPasswd) && textBox1.Text.Trim().Equals(userIdList[i]))
                             {
                                 MessageBox.Show(userNameList[i] + "님께서 물건을 수령하셨습니다.");
                                 conn.Close();
 
-                                conn.Open();
-                                command.CommandText = "UPDATE LockerInfor SET ItemName = NULL, Passwd = NULL, StoredTime = NULL WHERE LockerNum = " + lockernum + ";";
-                                command.ExecuteNonQuery();
+                                if (succeedToFindUser && succeedToCheckPasswd)
+                                {
+                                    conn.Open();
+                                    command.CommandText = "SELECT count(*) from ReceiverInfor;";
+                                    receiptCount = Convert.ToInt16(command.ExecuteScalar()) + 1;
+                                    conn.Close();
+
+                                    conn.Open();
+                                    command.CommandText = "INSERT INTO ReceiverInfor VALUES (" + receiptCount + ", '" + userIdList[i] + "', " + lockernum + ", '" + string.Format("{0:yyyy-MM-dd hh:mm:ss}", DateTime.Now) + "');";
+                                    command.ExecuteNonQuery();
+                                    conn.Close();
+
+                                    conn.Open();
+                                    command.CommandText = "UPDATE LockerInfor SET ItemName = NULL, Passwd = NULL, StoredTime = NULL WHERE LockerNum = " + lockernum + ";";
+                                    command.ExecuteNonQuery();
+                                }
+
+                                
 
                                 if (textBox2.Text.Trim().Equals(lockerPasswd))
                                 {
@@ -404,19 +426,9 @@ namespace DeliveryManagement_Client
                                 if (textBox1.Text.Trim().Equals(userIdList[i]))
                                     succeedToCheckPasswd = true;
 
-                                conn.Close();
-                                if (succeedToFindUser && succeedToCheckPasswd)
-                                {
-                                    conn.Open();
-                                    command.CommandText = "SELECT count(*) from ReceiverInfor;";
-                                    receiptCount = Convert.ToInt16(command.ExecuteScalar()) + 1;
-                                    conn.Close();
-
-                                    conn.Open();
-                                    command.CommandText = "INSERT INTO ReceiverInfor VALUES (" + receiptCount + ", '" + userIdList[i] + "', " + lockernum + ", '" + string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now) + "');";
-                                    command.ExecuteNonQuery();
-                                }
-                            }
+                                
+                                
+                            }       
                         }
                         if (string.IsNullOrEmpty(lockerPasswd))
                             MessageBox.Show("택배함 안에 물건이 없습니다.");
@@ -430,7 +442,7 @@ namespace DeliveryManagement_Client
                     }
                 }
                 conn.Close();
-            }
+            }  
         }
 
         private void button6_Click_1(object sender, EventArgs e)
@@ -456,8 +468,7 @@ namespace DeliveryManagement_Client
                 {
                     string lockerPasswd = userCheckreader["Passwd"].ToString().Trim();
 
-                    if (userCheckreader.NextResult())
-                    {
+                    if (userCheckreader.NextResult()){
                         List<string> userIdList = new List<string>();
                         List<string> userNameList = new List<string>();
                         while (userCheckreader.Read())
@@ -465,16 +476,30 @@ namespace DeliveryManagement_Client
                             userIdList.Add(userCheckreader["CustId"].ToString().Trim());
                             userNameList.Add(userCheckreader["CustName"].ToString().Trim());
                         }
-                        for (int i = 0; i < userIdList.Count; i++)
-                        {
+                        for (int i = 0; i < userIdList.Count; i++){
                             if (textBox2.Text.Trim().Equals(lockerPasswd) && textBox1.Text.Trim().Equals(userIdList[i]))
                             {
                                 MessageBox.Show(userNameList[i] + "님께서 물건을 수령하셨습니다.");
                                 conn.Close();
 
-                                conn.Open();
-                                command.CommandText = "UPDATE LockerInfor SET ItemName = NULL, Passwd = NULL, StoredTime = NULL WHERE LockerNum = " + lockernum + ";";
-                                command.ExecuteNonQuery();
+                                if (succeedToFindUser && succeedToCheckPasswd)
+                                {
+                                    conn.Open();
+                                    command.CommandText = "SELECT count(*) from ReceiverInfor;";
+                                    receiptCount = Convert.ToInt16(command.ExecuteScalar()) + 1;
+                                    conn.Close();
+
+                                    conn.Open();
+                                    command.CommandText = "INSERT INTO ReceiverInfor VALUES (" + receiptCount + ", '" + userIdList[i] + "', " + lockernum + ", '" + string.Format("{0:yyyy-MM-dd hh:mm:ss}", DateTime.Now) + "');";
+                                    command.ExecuteNonQuery();
+                                    conn.Close();
+
+                                    conn.Open();
+                                    command.CommandText = "UPDATE LockerInfor SET ItemName = NULL, Passwd = NULL, StoredTime = NULL WHERE LockerNum = " + lockernum + ";";
+                                    command.ExecuteNonQuery();
+                                }
+
+                                
 
                                 if (textBox2.Text.Trim().Equals(lockerPasswd))
                                 {
@@ -484,19 +509,9 @@ namespace DeliveryManagement_Client
                                 if (textBox1.Text.Trim().Equals(userIdList[i]))
                                     succeedToCheckPasswd = true;
 
-                                conn.Close();
-                                if (succeedToFindUser && succeedToCheckPasswd)
-                                {
-                                    conn.Open();
-                                    command.CommandText = "SELECT count(*) from ReceiverInfor;";
-                                    receiptCount = Convert.ToInt16(command.ExecuteScalar()) + 1;
-                                    conn.Close();
-
-                                    conn.Open();
-                                    command.CommandText = "INSERT INTO ReceiverInfor VALUES (" + receiptCount + ", '" + userIdList[i] + "', " + lockernum + ", '" + string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now) + "');";
-                                    command.ExecuteNonQuery();
-                                }
-                            }
+                                
+                                
+                            }       
                         }
                         if (string.IsNullOrEmpty(lockerPasswd))
                             MessageBox.Show("택배함 안에 물건이 없습니다.");
@@ -510,7 +525,7 @@ namespace DeliveryManagement_Client
                     }
                 }
                 conn.Close();
-            }
+            }  
         }
 
         private void button7_Click_1(object sender, EventArgs e)
@@ -536,8 +551,7 @@ namespace DeliveryManagement_Client
                 {
                     string lockerPasswd = userCheckreader["Passwd"].ToString().Trim();
 
-                    if (userCheckreader.NextResult())
-                    {
+                    if (userCheckreader.NextResult()){
                         List<string> userIdList = new List<string>();
                         List<string> userNameList = new List<string>();
                         while (userCheckreader.Read())
@@ -545,16 +559,30 @@ namespace DeliveryManagement_Client
                             userIdList.Add(userCheckreader["CustId"].ToString().Trim());
                             userNameList.Add(userCheckreader["CustName"].ToString().Trim());
                         }
-                        for (int i = 0; i < userIdList.Count; i++)
-                        {
+                        for (int i = 0; i < userIdList.Count; i++){
                             if (textBox2.Text.Trim().Equals(lockerPasswd) && textBox1.Text.Trim().Equals(userIdList[i]))
                             {
                                 MessageBox.Show(userNameList[i] + "님께서 물건을 수령하셨습니다.");
                                 conn.Close();
 
-                                conn.Open();
-                                command.CommandText = "UPDATE LockerInfor SET ItemName = NULL, Passwd = NULL, StoredTime = NULL WHERE LockerNum = " + lockernum + ";";
-                                command.ExecuteNonQuery();
+                                if (succeedToFindUser && succeedToCheckPasswd)
+                                {
+                                    conn.Open();
+                                    command.CommandText = "SELECT count(*) from ReceiverInfor;";
+                                    receiptCount = Convert.ToInt16(command.ExecuteScalar()) + 1;
+                                    conn.Close();
+
+                                    conn.Open();
+                                    command.CommandText = "INSERT INTO ReceiverInfor VALUES (" + receiptCount + ", '" + userIdList[i] + "', " + lockernum + ", '" + string.Format("{0:yyyy-MM-dd hh:mm:ss}", DateTime.Now) + "');";
+                                    command.ExecuteNonQuery();
+                                    conn.Close();
+
+                                    conn.Open();
+                                    command.CommandText = "UPDATE LockerInfor SET ItemName = NULL, Passwd = NULL, StoredTime = NULL WHERE LockerNum = " + lockernum + ";";
+                                    command.ExecuteNonQuery();
+                                }
+
+                                
 
                                 if (textBox2.Text.Trim().Equals(lockerPasswd))
                                 {
@@ -564,19 +592,9 @@ namespace DeliveryManagement_Client
                                 if (textBox1.Text.Trim().Equals(userIdList[i]))
                                     succeedToCheckPasswd = true;
 
-                                conn.Close();
-                                if (succeedToFindUser && succeedToCheckPasswd)
-                                {
-                                    conn.Open();
-                                    command.CommandText = "SELECT count(*) from ReceiverInfor;";
-                                    receiptCount = Convert.ToInt16(command.ExecuteScalar()) + 1;
-                                    conn.Close();
-
-                                    conn.Open();
-                                    command.CommandText = "INSERT INTO ReceiverInfor VALUES (" + receiptCount + ", '" + userIdList[i] + "', " + lockernum + ", '" + string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now) + "');";
-                                    command.ExecuteNonQuery();
-                                }
-                            }
+                                
+                                
+                            }       
                         }
                         if (string.IsNullOrEmpty(lockerPasswd))
                             MessageBox.Show("택배함 안에 물건이 없습니다.");
@@ -590,7 +608,7 @@ namespace DeliveryManagement_Client
                     }
                 }
                 conn.Close();
-            }
+            }  
         }
 
         private void button8_Click_1(object sender, EventArgs e)
@@ -616,8 +634,7 @@ namespace DeliveryManagement_Client
                 {
                     string lockerPasswd = userCheckreader["Passwd"].ToString().Trim();
 
-                    if (userCheckreader.NextResult())
-                    {
+                    if (userCheckreader.NextResult()){
                         List<string> userIdList = new List<string>();
                         List<string> userNameList = new List<string>();
                         while (userCheckreader.Read())
@@ -625,16 +642,30 @@ namespace DeliveryManagement_Client
                             userIdList.Add(userCheckreader["CustId"].ToString().Trim());
                             userNameList.Add(userCheckreader["CustName"].ToString().Trim());
                         }
-                        for (int i = 0; i < userIdList.Count; i++)
-                        {
+                        for (int i = 0; i < userIdList.Count; i++){
                             if (textBox2.Text.Trim().Equals(lockerPasswd) && textBox1.Text.Trim().Equals(userIdList[i]))
                             {
                                 MessageBox.Show(userNameList[i] + "님께서 물건을 수령하셨습니다.");
                                 conn.Close();
 
-                                conn.Open();
-                                command.CommandText = "UPDATE LockerInfor SET ItemName = NULL, Passwd = NULL, StoredTime = NULL WHERE LockerNum = " + lockernum + ";";
-                                command.ExecuteNonQuery();
+                                if (succeedToFindUser && succeedToCheckPasswd)
+                                {
+                                    conn.Open();
+                                    command.CommandText = "SELECT count(*) from ReceiverInfor;";
+                                    receiptCount = Convert.ToInt16(command.ExecuteScalar()) + 1;
+                                    conn.Close();
+
+                                    conn.Open();
+                                    command.CommandText = "INSERT INTO ReceiverInfor VALUES (" + receiptCount + ", '" + userIdList[i] + "', " + lockernum + ", '" + string.Format("{0:yyyy-MM-dd hh:mm:ss}", DateTime.Now) + "');";
+                                    command.ExecuteNonQuery();
+                                    conn.Close();
+
+                                    conn.Open();
+                                    command.CommandText = "UPDATE LockerInfor SET ItemName = NULL, Passwd = NULL, StoredTime = NULL WHERE LockerNum = " + lockernum + ";";
+                                    command.ExecuteNonQuery();
+                                }
+
+                                
 
                                 if (textBox2.Text.Trim().Equals(lockerPasswd))
                                 {
@@ -644,19 +675,9 @@ namespace DeliveryManagement_Client
                                 if (textBox1.Text.Trim().Equals(userIdList[i]))
                                     succeedToCheckPasswd = true;
 
-                                conn.Close();
-                                if (succeedToFindUser && succeedToCheckPasswd)
-                                {
-                                    conn.Open();
-                                    command.CommandText = "SELECT count(*) from ReceiverInfor;";
-                                    receiptCount = Convert.ToInt16(command.ExecuteScalar()) + 1;
-                                    conn.Close();
-
-                                    conn.Open();
-                                    command.CommandText = "INSERT INTO ReceiverInfor VALUES (" + receiptCount + ", '" + userIdList[i] + "', " + lockernum + ", '" + string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now) + "');";
-                                    command.ExecuteNonQuery();
-                                }
-                            }
+                                
+                                
+                            }       
                         }
                         if (string.IsNullOrEmpty(lockerPasswd))
                             MessageBox.Show("택배함 안에 물건이 없습니다.");
@@ -670,7 +691,7 @@ namespace DeliveryManagement_Client
                     }
                 }
                 conn.Close();
-            }
+            }  
         }
 
         private void button9_Click_1(object sender, EventArgs e)
@@ -696,8 +717,7 @@ namespace DeliveryManagement_Client
                 {
                     string lockerPasswd = userCheckreader["Passwd"].ToString().Trim();
 
-                    if (userCheckreader.NextResult())
-                    {
+                    if (userCheckreader.NextResult()){
                         List<string> userIdList = new List<string>();
                         List<string> userNameList = new List<string>();
                         while (userCheckreader.Read())
@@ -705,16 +725,30 @@ namespace DeliveryManagement_Client
                             userIdList.Add(userCheckreader["CustId"].ToString().Trim());
                             userNameList.Add(userCheckreader["CustName"].ToString().Trim());
                         }
-                        for (int i = 0; i < userIdList.Count; i++)
-                        {
+                        for (int i = 0; i < userIdList.Count; i++){
                             if (textBox2.Text.Trim().Equals(lockerPasswd) && textBox1.Text.Trim().Equals(userIdList[i]))
                             {
                                 MessageBox.Show(userNameList[i] + "님께서 물건을 수령하셨습니다.");
                                 conn.Close();
 
-                                conn.Open();
-                                command.CommandText = "UPDATE LockerInfor SET ItemName = NULL, Passwd = NULL, StoredTime = NULL WHERE LockerNum = " + lockernum + ";";
-                                command.ExecuteNonQuery();
+                                if (succeedToFindUser && succeedToCheckPasswd)
+                                {
+                                    conn.Open();
+                                    command.CommandText = "SELECT count(*) from ReceiverInfor;";
+                                    receiptCount = Convert.ToInt16(command.ExecuteScalar()) + 1;
+                                    conn.Close();
+
+                                    conn.Open();
+                                    command.CommandText = "INSERT INTO ReceiverInfor VALUES (" + receiptCount + ", '" + userIdList[i] + "', " + lockernum + ", '" + string.Format("{0:yyyy-MM-dd hh:mm:ss}", DateTime.Now) + "');";
+                                    command.ExecuteNonQuery();
+                                    conn.Close();
+
+                                    conn.Open();
+                                    command.CommandText = "UPDATE LockerInfor SET ItemName = NULL, Passwd = NULL, StoredTime = NULL WHERE LockerNum = " + lockernum + ";";
+                                    command.ExecuteNonQuery();
+                                }
+
+                                
 
                                 if (textBox2.Text.Trim().Equals(lockerPasswd))
                                 {
@@ -724,19 +758,9 @@ namespace DeliveryManagement_Client
                                 if (textBox1.Text.Trim().Equals(userIdList[i]))
                                     succeedToCheckPasswd = true;
 
-                                conn.Close();
-                                if (succeedToFindUser && succeedToCheckPasswd)
-                                {
-                                    conn.Open();
-                                    command.CommandText = "SELECT count(*) from ReceiverInfor;";
-                                    receiptCount = Convert.ToInt16(command.ExecuteScalar()) + 1;
-                                    conn.Close();
-
-                                    conn.Open();
-                                    command.CommandText = "INSERT INTO ReceiverInfor VALUES (" + receiptCount + ", '" + userIdList[i] + "', " + lockernum + ", '" + string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now) + "');";
-                                    command.ExecuteNonQuery();
-                                }
-                            }
+                                
+                                
+                            }       
                         }
                         if (string.IsNullOrEmpty(lockerPasswd))
                             MessageBox.Show("택배함 안에 물건이 없습니다.");
@@ -750,7 +774,7 @@ namespace DeliveryManagement_Client
                     }
                 }
                 conn.Close();
-            }
+            }  
         }
 
         private void button10_Click_1(object sender, EventArgs e)
@@ -776,8 +800,7 @@ namespace DeliveryManagement_Client
                 {
                     string lockerPasswd = userCheckreader["Passwd"].ToString().Trim();
 
-                    if (userCheckreader.NextResult())
-                    {
+                    if (userCheckreader.NextResult()){
                         List<string> userIdList = new List<string>();
                         List<string> userNameList = new List<string>();
                         while (userCheckreader.Read())
@@ -785,16 +808,30 @@ namespace DeliveryManagement_Client
                             userIdList.Add(userCheckreader["CustId"].ToString().Trim());
                             userNameList.Add(userCheckreader["CustName"].ToString().Trim());
                         }
-                        for (int i = 0; i < userIdList.Count; i++)
-                        {
+                        for (int i = 0; i < userIdList.Count; i++){
                             if (textBox2.Text.Trim().Equals(lockerPasswd) && textBox1.Text.Trim().Equals(userIdList[i]))
                             {
                                 MessageBox.Show(userNameList[i] + "님께서 물건을 수령하셨습니다.");
                                 conn.Close();
 
-                                conn.Open();
-                                command.CommandText = "UPDATE LockerInfor SET ItemName = NULL, Passwd = NULL, StoredTime = NULL WHERE LockerNum = " + lockernum + ";";
-                                command.ExecuteNonQuery();
+                                if (succeedToFindUser && succeedToCheckPasswd)
+                                {
+                                    conn.Open();
+                                    command.CommandText = "SELECT count(*) from ReceiverInfor;";
+                                    receiptCount = Convert.ToInt16(command.ExecuteScalar()) + 1;
+                                    conn.Close();
+
+                                    conn.Open();
+                                    command.CommandText = "INSERT INTO ReceiverInfor VALUES (" + receiptCount + ", '" + userIdList[i] + "', " + lockernum + ", '" + string.Format("{0:yyyy-MM-dd hh:mm:ss}", DateTime.Now) + "');";
+                                    command.ExecuteNonQuery();
+                                    conn.Close();
+
+                                    conn.Open();
+                                    command.CommandText = "UPDATE LockerInfor SET ItemName = NULL, Passwd = NULL, StoredTime = NULL WHERE LockerNum = " + lockernum + ";";
+                                    command.ExecuteNonQuery();
+                                }
+
+                                
 
                                 if (textBox2.Text.Trim().Equals(lockerPasswd))
                                 {
@@ -804,19 +841,9 @@ namespace DeliveryManagement_Client
                                 if (textBox1.Text.Trim().Equals(userIdList[i]))
                                     succeedToCheckPasswd = true;
 
-                                conn.Close();
-                                if (succeedToFindUser && succeedToCheckPasswd)
-                                {
-                                    conn.Open();
-                                    command.CommandText = "SELECT count(*) from ReceiverInfor;";
-                                    receiptCount = Convert.ToInt16(command.ExecuteScalar()) + 1;
-                                    conn.Close();
-
-                                    conn.Open();
-                                    command.CommandText = "INSERT INTO ReceiverInfor VALUES (" + receiptCount + ", '" + userIdList[i] + "', " + lockernum + ", '" + string.Format("{0:yyyy-MM-dd HH:mm:ss}", DateTime.Now) + "');";
-                                    command.ExecuteNonQuery();
-                                }
-                            }
+                                
+                                
+                            }       
                         }
                         if (string.IsNullOrEmpty(lockerPasswd))
                             MessageBox.Show("택배함 안에 물건이 없습니다.");
@@ -830,7 +857,7 @@ namespace DeliveryManagement_Client
                     }
                 }
                 conn.Close();
-            }
+            }  
         }
         private void button1_Click(object sender, EventArgs e)
         {
